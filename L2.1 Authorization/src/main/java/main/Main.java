@@ -30,7 +30,7 @@ public class Main {
         context.addServlet(new ServletHolder(new SessionsServlet(accountService)), "/api/v1/sessions");
 
         ResourceHandler resource_handler = new ResourceHandler();
-        resource_handler.setResourceBase("public_html");
+        resource_handler.setResourceBase("L2.1 Authorization/public_html");
 
         HandlerList handlers = new HandlerList();
         handlers.setHandlers(new Handler[]{resource_handler, context});
