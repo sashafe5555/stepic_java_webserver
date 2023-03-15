@@ -19,7 +19,7 @@ public class DBService {
     private final Connection connection;
 
     public DBService() {
-        this.connection = getH2Connection();
+        this.connection = getMysqlConnection();
     }
 
     public UsersDataSet getUser(long id) throws DBException {
