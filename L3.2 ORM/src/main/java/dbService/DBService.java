@@ -11,6 +11,7 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.internal.SessionFactoryImpl;
 import org.hibernate.service.ServiceRegistry;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -37,13 +38,13 @@ public class DBService {
         Configuration configuration = new Configuration();
         configuration.addAnnotatedClass(UsersDataSet.class);
 
-//        configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
-//        configuration.setProperty("hibernate.connection.driver_class", "com.mysql.jdbc.Driver");
-//        configuration.setProperty("hibernate.connection.url", "jdbc:mysql://localhost:3306/db_example");
-//        configuration.setProperty("hibernate.connection.username", "tully");
-//        configuration.setProperty("hibernate.connection.password", "tully");
-//        configuration.setProperty("hibernate.show_sql", hibernate_show_sql);
-//        configuration.setProperty("hibernate.hbm2ddl.auto", hibernate_hbm2ddl_auto);
+        configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
+        configuration.setProperty("hibernate.connection.driver_class", "com.mysql.jdbc.Driver");
+        configuration.setProperty("hibernate.connection.url", "jdbc:mysql://localhost:3306/db_example");
+        configuration.setProperty("hibernate.connection.username", "tully");
+        configuration.setProperty("hibernate.connection.password", "tully");
+        configuration.setProperty("hibernate.show_sql", hibernate_show_sql);
+        configuration.setProperty("hibernate.hbm2ddl.auto", hibernate_hbm2ddl_auto);
         return configuration;
     }
 
@@ -102,9 +103,11 @@ public class DBService {
     }
 
     private static SessionFactory createSessionFactory(Configuration configuration) {
-        StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder();
-        builder.applySettings(configuration.getProperties());
-        ServiceRegistry serviceRegistry = builder.build();
-        return configuration.buildSessionFactory(serviceRegistry);
+//        StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder();
+//        builder.applySettings(configuration.getProperties());
+//        ServiceRegistry serviceRegistry = builder.build();
+//        return configuration.buildSessionFactory(serviceRegistry);
+
+        return configuration.buildSessionFactory();
     }
 }
