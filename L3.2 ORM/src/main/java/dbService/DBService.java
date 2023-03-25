@@ -6,14 +6,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.internal.SessionFactoryImpl;
-import org.hibernate.service.ServiceRegistry;
-
-import java.io.File;
-import java.sql.Connection;
-import java.sql.SQLException;
 
 /**
  * @author v.chibrikov
@@ -24,7 +17,7 @@ import java.sql.SQLException;
  */
 public class DBService {
     private static final String hibernate_show_sql = "true";
-    private static final String hibernate_hbm2ddl_auto = "create";
+    private static final String hibernate_hbm2ddl_auto = "create-drop";
 
     private final SessionFactory sessionFactory;
 
@@ -91,13 +84,15 @@ public class DBService {
 
     public void printConnectInfo() {
         try {
-            SessionFactoryImpl sessionFactoryImpl = (SessionFactoryImpl) sessionFactory;
-            Connection connection = sessionFactoryImpl.getConnectionProvider().getConnection();
-            System.out.println("DB name: " + connection.getMetaData().getDatabaseProductName());
-            System.out.println("DB version: " + connection.getMetaData().getDatabaseProductVersion());
-            System.out.println("Driver: " + connection.getMetaData().getDriverName());
-            System.out.println("Autocommit: " + connection.getAutoCommit());
-        } catch (SQLException e) {
+            Session session = sessionFactory.openSession();
+            session.doWork(connection -> {
+                System.out.println("DB name: " + connection.getMetaData().getDatabaseProductName());
+                System.out.println("DB version: " + connection.getMetaData().getDatabaseProductVersion());
+                System.out.println("Driver: " + connection.getMetaData().getDriverName());
+                System.out.println("Autocommit: " + connection.getAutoCommit());
+            });
+            session.close();
+        } catch (HibernateException e) {
             e.printStackTrace();
         }
     }

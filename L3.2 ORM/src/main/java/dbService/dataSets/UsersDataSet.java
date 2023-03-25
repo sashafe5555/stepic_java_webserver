@@ -1,6 +1,6 @@
 package dbService.dataSets;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.io.Serializable;
 
 /**
